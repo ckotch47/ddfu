@@ -1,6 +1,9 @@
+import asyncio
+
 from app.dns_resolver.service import DnsResolverService
 from progress.bar import IncrementalBar
 from print_color import print
+import threading
 
 
 class DnsBruteforceService(DnsResolverService):
@@ -34,10 +37,12 @@ class DnsBruteforceService(DnsResolverService):
         return file_path
 
     def bruteforce_domain(self,
-                          domain: str = None,
-                          path: str = None,
-                          depth: int = 0,
-                          size: int = None):
+                                domain: str = None,
+                                path: str = None,
+                                depth: int = 0,
+                                size: int = None):
+
+        global progres_bar
         if domain not in self.scanned_domain:
             self.scanned_domain.append(domain)
             self.domains.append([f'{domain}', self.resolve(domain, False)])
@@ -66,7 +71,6 @@ class DnsBruteforceService(DnsResolverService):
 
         for domain in self.domains:
             self.bruteforce_domain(domain[0], path, depth - 1, size)
-
         return
 
     def print_domains(self):
