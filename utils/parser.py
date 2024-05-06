@@ -1,10 +1,11 @@
 import argparse
 
 epilog_text = '''
-        python main.py --host google.com                              : for find ip and dns recon
-        python main.py --host google.com -b -p worldlist/subdomain.txt    : for find ip and dns recon and bruteforce subdomain
-        python main.py --host google.com -b -p worldlist/subdomain.txt -r : for find ip and dns recon and bruteforce subdomain and find bigger subdomain
-        python main.py --host http://localhost --port 8000 -ddos -t 10     : for simple ddos server 
+        python main.py --host google.com                                                          : for find ip and dns recon
+        python main.py --host google.com -b -p worldlist/subdomain.txt                            : for find ip and dns recon and bruteforce subdomain
+        python main.py --host google.com -b -p worldlist/subdomain.txt -r                         : for find ip and dns recon and bruteforce subdomain and find bigger subdomain
+        python main.py --host http://localhost --port 8000 -ddos -t 10                            : for simple ddos server
+        python main.py --host http://localhost -p 'worldlist/admin-page.txt' -admin -timeout 0.3  : for simple adminfinder or swagger finder
 '''
 
 parser = argparse.ArgumentParser(
@@ -63,4 +64,18 @@ parser.add_argument(
     help='user count for ddos'
 )
 
+parser.add_argument(
+    '-admin',
+    type=bool,
+    default=False,
+    required=False,
+    action=argparse.BooleanOptionalAction,
+    help='active adminfinder panel'
+)
+parser.add_argument(
+    '-timeout',
+    type=float,
+    default=0.1,
+    help='timeout for request adminfinder'
+)
 m_arguments = parser.parse_args()

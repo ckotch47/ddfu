@@ -1,6 +1,6 @@
 import asyncio
 
-from app import DnsBruteforceService, DnsResolverService, run_ddos_request
+from app import DnsBruteforceService, DnsResolverService, run_ddos_request, admin_finder_request
 from print_color import print
 import pyfiglet
 
@@ -29,12 +29,16 @@ async def main(arguments):
     if arguments.ddos:
         run_ddos_request(arguments.host, arguments.port, arguments.t)
         return
+    if arguments.admin:
+        admin_finder_request(arguments.host, arguments.timeout, arguments.p)
+        return
     main_dns_resolve(arguments)
 
 
 if __name__ == '__main__':
     print(
-        pyfiglet.figlet_format("dsd", font="slant"),
+        pyfiglet.figlet_format("DDFu", font="larry3d"),
         color='c'
     )
-    asyncio.run(main(m_arguments))
+
+    # asyncio.run(main(m_arguments))
