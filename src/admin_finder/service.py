@@ -1,7 +1,7 @@
 import time
 
 import requests
-from app.common import header_service
+from src.common import header_service
 from print_color import print
 
 
@@ -34,10 +34,9 @@ class AdminFinder:
             return word
 
 
-def _request(url):
+def _request(url, host):
     return requests.get(
-        url=f'{url}',
-        headers=header_service.header(url)
+        url=f'{url}'
     )
 
 
@@ -47,7 +46,9 @@ def admin_finder_request(url: str, timeout: int = 0, filename: str = 'worldlist/
         i = adminFinder.__next__()
         if not i:
             break
-        res = _request(f"{url}/{i}")
-        if res.status_code != 404:
+        res = _request(f"{url}/{i}", url)
+        if res.status_code == 200:
             print(f"{url}/{i}", tag_color='g', tag=f'{res.status_code}')
+        else:
+            print(f"{url}/{i}", tag_color='r', tag=f'{res.status_code}')
         time.sleep(timeout)

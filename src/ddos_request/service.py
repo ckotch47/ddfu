@@ -1,6 +1,6 @@
 import random
 import string
-from app.common import header_service
+from src.common import header_service
 from requests import request as req
 import threading
 from print_color import print

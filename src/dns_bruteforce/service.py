@@ -1,6 +1,6 @@
 import asyncio
 
-from app.dns_resolver.service import DnsResolverService
+from src.dns_resolver.service import DnsResolverService
 from progress.bar import IncrementalBar
 from print_color import print
 import threading
