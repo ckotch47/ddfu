@@ -40,5 +40,4 @@ if __name__ == '__main__':
         pyfiglet.figlet_format("DDFu", font="larry3d"),
         color='c'
     )
-
-    # asyncio.run(main(m_arguments))
+    asyncio.run(main(m_arguments))
