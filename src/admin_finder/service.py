@@ -1,7 +1,6 @@
 import time
 
 import requests
-from src.common import header_service
 from print_color import print
 
 
@@ -48,7 +47,7 @@ def admin_finder_request(url: str, timeout: int = 0, filename: str = 'worldlist/
             break
         res = _request(f"{url}/{i}", url)
         if res.status_code == 200:
-            print(f"{url}/{i}", tag_color='g', tag=f'{res.status_code}')
+            print(f"{url}/{i}", color='c', tag_color='g', tag=f'{res.status_code}')
         else:
-            print(f"{url}/{i}", tag_color='r', tag=f'{res.status_code}')
+            print(f"{url}/{i}", color='c', tag_color='r', tag=f'{res.status_code}')
         time.sleep(timeout)

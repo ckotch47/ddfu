@@ -78,4 +78,11 @@ parser.add_argument(
     default=0.1,
     help='timeout for request adminfinder'
 )
+parser.add_argument(
+    '--ip',
+    type=str,
+    default=None,
+    help='ip for find host'
+)
+
 m_arguments = parser.parse_args()
