@@ -29,16 +29,19 @@ def main():
         pyfiglet.figlet_format("DDFu", font="larry3d"),
         color='c'
     )
-    if arguments.ddos:
-        run_ddos_request(arguments.host, arguments.port, arguments.t)
-        return
-    if arguments.admin:
-        admin_finder_request(arguments.host, arguments.timeout, arguments.p)
-        return
-    if arguments.ip:
-        dns_get_ptr.get(arguments.ip)
-        dns_get_ptr.print()
-        return
-    main_dns_resolve(arguments)
+    try:
+        if arguments.ddos:
+            run_ddos_request(arguments.host, arguments.port, arguments.t)
+            return
+        if arguments.admin:
+            admin_finder_request(arguments.host, arguments.timeout, arguments.p)
+            return
+        if arguments.ip:
+            dns_get_ptr.get(arguments.ip)
+            dns_get_ptr.print()
+            return
+        main_dns_resolve(arguments)
+    except KeyboardInterrupt:
+        print('exit by user', color='r')
 
 
