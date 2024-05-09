@@ -1,4 +1,4 @@
-from src.dns_resolver.service import DnsResolverService
+from ddfu.src.dns_resolver.service import DnsResolverService
 from progress.bar import IncrementalBar
 from print_color import print
 

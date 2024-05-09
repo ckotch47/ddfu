@@ -1,8 +1,8 @@
-from src import DnsBruteforceService, DnsResolverService, run_ddos_request, admin_finder_request, dns_get_ptr
+from ddfu.src import DnsBruteforceService, DnsResolverService, run_ddos_request, admin_finder_request, dns_get_ptr
 from print_color import print
 import pyfiglet
 
-from utils.parser import m_arguments
+from ddfu.utils.parser import m_arguments
 
 
 def main_dns_resolve(arguments):
@@ -23,7 +23,8 @@ def main_dns_resolve(arguments):
     return
 
 
-def main(arguments):
+def main():
+    arguments = m_arguments
     print(
         pyfiglet.figlet_format("DDFu", font="larry3d"),
         color='c'
@@ -41,4 +42,3 @@ def main(arguments):
     main_dns_resolve(arguments)
 
 
-main(m_arguments)
