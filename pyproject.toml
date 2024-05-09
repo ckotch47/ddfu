@@ -5,6 +5,9 @@ description = ""
 authors = ["ckotch47"]
 readme = "README.md"
 
+[tool.poetry.urls]
+"homepage" = "https://github.com/ckotch47/ddfu"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 print-color = "^0.4.6"
@@ -19,3 +22,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 ddfu = 'ddfu:main'
+
