@@ -1,5 +1,5 @@
 **DNS SEEN**
-#
+# Usage
 Программа предназначена для определения ip адресса домена и для нахождение его поддоменов по славарю
 
 Программа запускается через cli и имеет следующие параметры 
@@ -27,4 +27,21 @@ python main.py --host google.com -b -p worldlist/subdomain.txt -r
 
 python main.py --host http://localhost --port 8000 -ddos -t 10                            
 
-python main.py --host http://localhost:8093 -p 'worldlist/admin-page.txt' -admin -timeout 0.3  
+python main.py --host http://localhost:8093 -p 'worldlist/admin-page.txt' -admin -timeout 0.3
+
+## for dev
+git clone https://github.com/ckotch47/opeapi-scan.git
+
+poetry install
+
+poetry build 
+
+poetry run ddfu
+
+## for install package
+pip install https://github.com/ckotch47/ddfu/releases/download/0.0.1/ddfu-x.x.x-py3-none-any.whl
+
+or
+
+pip install https://github.com/ckotch47/ddfu/releases/download/0.0.1/ddfu-x.x.x.tar.gz
+
