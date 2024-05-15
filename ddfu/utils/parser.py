@@ -1,11 +1,17 @@
 import argparse
 
 epilog_text = '''
-        python main.py --host google.com                                                          : for find ip and dns recon
-        python main.py --host google.com -b -p worldlist/subdomain.txt                            : for find ip and dns recon and bruteforce subdomain
-        python main.py --host google.com -b -p worldlist/subdomain.txt -r                         : for find ip and dns recon and bruteforce subdomain and find bigger subdomain
-        python main.py --host http://localhost --port 8000 -ddos -t 10                            : for simple ddos server
-        python main.py --host http://localhost -p 'worldlist/admin-page.txt' -admin -timeout 0.3  : for simple adminfinder or swagger finder
+        python main.py --host google.com                                                : for find ip and dns recon
+        python main.py --host google.com -b -p worldlist/subdomain.txt                  : for find ip and dns recon and bruteforce subdomain
+        python main.py --host google.com -b -p worldlist/subdomain.txt -r               : for find ip and dns recon and bruteforce subdomain and find bigger subdomain
+        python main.py --host http://localhost --port 8000 -ddos -t 10                  : for simple ddos server
+        python main.py --host http://localhost -admin -p 'admin-page.txt' -timeout 0.3  : for simple adminfinder or swagger finder
+        python main.py --ip 192.168.0.1                                                 : try find hosting server
+        python main.py --host google.com -map                                           : for scan port on host
+        python main.py --ip 192.168.0.1 -map                                            : for scan port on ip    
+        python main.py -fuzz --url https://example/FUZZ --header '{"Authorization": ""}': for fuzz
+        --method get --body '{"id":"FUZZUUID4", "docs": "fuzz"}' -p fuzz.txt
+    
 '''
 
 parser = argparse.ArgumentParser(
@@ -84,5 +90,45 @@ parser.add_argument(
     default=None,
     help='ip for find host'
 )
+parser.add_argument(
+    '-map',
+    type=bool,
+    default=False,
+    required=False,
+    action=argparse.BooleanOptionalAction,
+    help='active port scan for --ip'
+)
 
+parser.add_argument(
+    '-fuzz',
+    type=bool,
+    default=False,
+    required=False,
+    action=argparse.BooleanOptionalAction,
+    help='active fuzzing attack'
+)
+parser.add_argument(
+    '--url',
+    type=str,
+    default=None,
+    help='url for fuzz'
+)
+parser.add_argument(
+    '--method',
+    type=str,
+    default=None,
+    help='method get for fuzz (get, post, put, patch, delete)'
+)
+parser.add_argument(
+    '--header',
+    type=str,
+    default=None,
+    help='add header params to fuzzing (json string)'
+)
+parser.add_argument(
+    '--body',
+    type=str,
+    default=None,
+    help='add body params to post method to fuzzing (json string)'
+)
 m_arguments = parser.parse_args()

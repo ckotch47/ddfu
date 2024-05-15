@@ -1,4 +1,4 @@
-from ddfu.src import DnsBruteforceService, DnsResolverService, run_ddos_request, admin_finder_request, dns_get_ptr
+from ddfu.src import DnsBruteforceService, DnsResolverService, run_ddos_request, AdminFinder, dns_get_ptr, PortScan, Fuzzing
 from print_color import print
 import pyfiglet
 
@@ -34,14 +34,29 @@ def main():
             run_ddos_request(arguments.host, arguments.port, arguments.t)
             return
         if arguments.admin:
-            admin_finder_request(arguments.host, arguments.timeout, arguments.p)
+            AdminFinder().admin_finder_request(arguments.host, arguments.timeout, arguments.p)
             return
-        if arguments.ip:
+        if arguments.ip and not arguments.map:
             dns_get_ptr.get(arguments.ip)
             dns_get_ptr.print()
+            return
+        if arguments.ip and arguments.map:
+            PortScan().scan(arguments.ip)
+            return
+        if arguments.host and arguments.map:
+            host_ip = DnsResolverService().resolve(arguments.host, show_failed=True)
+            PortScan().scan(host_ip)
+            return
+        if arguments.fuzz:
+            Fuzzing(arguments.url, arguments.method,  arguments.header, arguments.body, arguments.p, arguments.timeout).fuzz()
             return
         main_dns_resolve(arguments)
     except KeyboardInterrupt:
         print('exit by user', color='r')
+        return
+    except Exception as e:
+        print(e)
+        return
 
+# poetry run ddfu -fuzz --url https://app.vtpad.ru/space/FUZZ --header "{Auth: admin}" --method get --body "{id:'1', docs: 'fuzz'}"
 

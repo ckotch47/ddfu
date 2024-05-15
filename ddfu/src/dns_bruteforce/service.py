@@ -1,12 +1,14 @@
 from ddfu.src.dns_resolver.service import DnsResolverService
-from progress.bar import IncrementalBar
 from print_color import print
+from ddfu.src.common.progress_bar_base import ProgressBarBase
 
 
 class DnsBruteforceService(DnsResolverService):
     path = 'worldlist'
     domains = []
     scanned_domain = []
+    file_len = 0
+    progress_bar = ProgressBarBase(0, 'Scan progress')
 
     def _get_file(self, path: str = None, size: int = None):
         try:
@@ -34,23 +36,20 @@ class DnsBruteforceService(DnsResolverService):
         return file_path
 
     def bruteforce_domain(self,
-                                domain: str = None,
-                                path: str = None,
-                                depth: int = 0,
-                                size: int = None):
+                          domain: str = None,
+                          path: str = None,
+                          depth: int = 0,
+                          size: int = None):
 
-        global progres_bar
         if domain not in self.scanned_domain:
             self.scanned_domain.append(domain)
             self.domains.append([f'{domain}', self.resolve(domain, False)])
 
-        if self.debug:
-            print(f'Scan for {domain}', tag='warning', tag_color='y')
-
         sub_list = self._get_file(path, size)
+        self.file_len = self.file_len + len(sub_list)
 
-        if not self.debug:
-            progres_bar = IncrementalBar('Scan progress', max=len(sub_list), color='cyan')
+        self.progress_bar.new_max(self.file_len)
+        # progres_bar = IncrementalBar('Scan progress', max=len(sub_list), color='cyan')
 
         for i in sub_list:
             if f'{i}.{domain}' not in self.scanned_domain:
@@ -59,15 +58,15 @@ class DnsBruteforceService(DnsResolverService):
                     self.scanned_domain.append(f'{i}.{domain}')
                     self.domains.append([f'{i}.{domain}', r])
             if not self.debug:
-                progres_bar.next()
+                self.progress_bar.__next__()
 
-        if not self.debug:
-            progres_bar.finish()
         if depth == 0:
             return
 
         for domain in self.domains:
             self.bruteforce_domain(domain[0], path, depth - 1, size)
+
+        self.progress_bar.__del__()
         return
 
     def print_domains(self):
